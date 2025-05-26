@@ -14,38 +14,13 @@ target("firmware")
     -- 设置目标平台和CPU架构
     add_defines("STM32F407xx")
     add_defines("DTM_CHIP=stm32f407")
-    set_arch("arm")
+    set_arch("cortex-m4")
     set_plat("cross")
-    
-    -- 编译选项
-    add_cflags(
-        "-mcpu=cortex-m4",
-        "-mthumb",
-        "-mfpu=fpv4-sp-d16",
-        "-mfloat-abi=hard",
-        "-ffunction-sections",
-        "-fdata-sections",
-        "-Os",
-        "-Wall",
-        "-Werror"
-    )
-    
-    add_asflags(
-        "-mcpu=cortex-m4",
-        "-mthumb",
-        "-mfpu=fpv4-sp-d16",
-        "-mfloat-abi=hard"
-    )
-    
-    add_ldflags(
-        "-mcpu=cortex-m4",
-        "-mthumb",
-        "-mfpu=fpv4-sp-d16",
-        "-mfloat-abi=hard",
-        "-Wl,--gc-sections",
-        "-specs=nano.specs",
-        "-T$(projectdir)linker.ld"
-    )
+    -- add_links("c", "m", "nosys");
+    add_cxflags('-mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Dgcc -Wall --specs=nosys.specs -O0  -gdwarf-2 -g')
+    add_ldflags('-mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Wl,--gc-sections,-Map=puppy.map,-cref,-u,Reset_Handler --specs=nosys.specs',{force = true})
+    add_asflags('-c -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -x assembler-with-cpp -Wa,-mimplicit-it=thumb -gdwarf-2 -g')
+    add_ldflags(' -T ' .. os.scriptdir() .. '/link.lds')
     
     -- 包含路径
     add_includedirs(
@@ -59,10 +34,13 @@ target("firmware")
     -- 源文件
     add_files(
         "main.c",
-        "chips/stm32f407/system.c",
-        "ips/stm32_uart.c",
-        "common/vectors.c",
-        "chips/stm32f407/startup.S"
+        -- "chips/stm32f407/system.c",
+        "ips/stm32_pmctrl.c",
+        "ips/stm32_flash.c",
+        "ips/stm32_gpio.c",
+        "ips/stm32_clk.c",
+        -- "common/vectors.c",
+        "chips/stm32f407/start.s"
     )
     
     -- 构建后生成bin文件

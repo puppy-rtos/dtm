@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "dtm_bindings.h": "c",
+        "stm32_clk.h": "c",
+        "stm32_pmctrl.h": "c",
+        "dtm_gpio.h": "c",
+        "dtm_pmctrl.h": "c"
+    }
+}

@@ -1,0 +1,34 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "f407",
+            "cwd": "${workspaceFolder}",
+            "executable": "build/cross/cortex-m4/debug/firmware.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "Reset_Handler",
+            "targetId": "stm32f412xe",
+            // "cmsisPack": "GigaDevice.GD32F30x_DFP.2.2.3.pack",
+            "servertype": "pyocd",
+            "armToolchainPath": "D:/Progrem/arm-gnu-toolchain-12.2.rel1/bin",
+            "gdbPath": "D:/Progrem/arm-gnu-toolchain-12.2.rel1/bin/arm-none-eabi-gdb",
+        },
+        {
+            "name": "f407-app",
+            "cwd": "${workspaceFolder}",
+            "executable": "zig-out\\bin\\stm32-app.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "_start",
+            "targetId": "stm32f412xg",
+            // "cmsisPack": "GigaDevice.GD32F4xx_DFP.3.2.0.pack",
+            "servertype": "pyocd",
+            "armToolchainPath": "/opt/gcc-arm-none-eabi-10-2020-q4-major/bin",
+            "gdbPath": "/opt/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gdb",
+        },
+    ]
+}
