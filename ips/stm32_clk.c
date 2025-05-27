@@ -89,7 +89,7 @@ typedef struct
  *              CPU frequency (HCLK) = pll_p_ck = 168Mhz
  *              AHB1/2/3(rcc_hclk1/2/3) = 168Mhz
  *              APB1(rcc_pclk1) = pll_p_ck / 4 = 42Mhz
- *              APB1(rcc_pclk2) = pll_p_ck / 2 = 84Mhz
+ *              APB2(rcc_pclk2) = pll_p_ck / 2 = 84Mhz
  *
  * @retval      Error code: 0, success; 1, HSE error; 2, PLL1 error; 3, PLL2 error; 4, clock switch error;
  */
@@ -186,6 +186,14 @@ void dtm_clk_init(void)
 #endif
 #ifdef DTM_GPIOF_CLK_EN
     RCC->AHB1ENR |= DTM_GPIOF_CLK_EN;  /* Enable GPIOF clock */
+#endif
+
+    /* Enable USART1 and USART2 clocks */
+#ifdef DTM_UART1_CLK_EN
+    RCC->APB2ENR |= DTM_UART1_CLK_EN;  /* Enable USART1 clock */
+#endif
+#ifdef DTM_UART2_CLK_EN
+    RCC->APB1ENR |= DTM_UART2_CLK_EN;  /* Enable USART2 clock */
 #endif
 
 }

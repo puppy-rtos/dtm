@@ -39,6 +39,7 @@ target("firmware")
         "ips/stm32_flash.c",
         "ips/stm32_gpio.c",
         "ips/stm32_clk.c",
+        "ips/stm32_uart.c",
         -- "common/vectors.c",
         "chips/stm32f407/start.s"
     )

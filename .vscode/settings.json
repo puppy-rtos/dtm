@@ -4,6 +4,8 @@
         "stm32_clk.h": "c",
         "stm32_pmctrl.h": "c",
         "dtm_gpio.h": "c",
-        "dtm_pmctrl.h": "c"
+        "dtm_pmctrl.h": "c",
+        "dtm_clk.h": "c",
+        "dtm_uart.h": "c"
     }
 }

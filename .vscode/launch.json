@@ -12,6 +12,7 @@
             "type": "cortex-debug",
             "runToEntryPoint": "Reset_Handler",
             "targetId": "stm32f412xe",
+            "svdFile": "./STM32F407.svd",
             // "cmsisPack": "GigaDevice.GD32F30x_DFP.2.2.3.pack",
             "servertype": "pyocd",
             "armToolchainPath": "D:/Progrem/arm-gnu-toolchain-12.2.rel1/bin",

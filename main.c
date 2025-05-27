@@ -1,6 +1,10 @@
 #include "chips/stm32f407/dtm_bindings.h"
 #include "stdint.h"
 #include "common/dtm_gpio.h"
+#include "common/dtm_pmctrl.h"
+#include "common/dtm_flash.h"
+#include "common/dtm_clk.h"
+#include "common/dtm_uart.h"
 
 /* 简单延时函数 */
 static void delay(uint32_t count) {
@@ -13,12 +17,17 @@ int main(void) {
     dtm_pmctrl_init();  /* Initialize power management controller */
     dtm_flash_init();   /* Initialize flash controller */
     dtm_clk_init();     /* Initialize system clock */
+    dtm_uart_init(84, 115200); /* Initialize UART with 84MHz clock and 115200 baud rate */
 
     // GPIOF11 led pin configuration
     dtm_gpio_set(GPIOF, DTM_GPIO_PIN11, DTM_GPIO_MODE_OUT, DTM_GPIO_OTYPE_PP, DTM_GPIO_SPEED_HIGH, DTM_GPIO_PUPD_NONE);
 
     // led blink loop
     while (1) {
+        dtm_uart_putc('H'); // Send 'H' character via UART
+        dtm_uart_putc('i'); // Send 'i' character via UART
+        dtm_uart_putc('\r'); // Send newline character via UART
+        dtm_uart_putc('\n'); // Send newline character via UART
         dtm_gpio_pin_set(GPIOF, DTM_GPIO_PIN11, 0); // Set GPIOF11 low
         delay(1000000); // Delay for a while
         dtm_gpio_pin_set(GPIOF, DTM_GPIO_PIN11, 1); // Set GPIOF11 high

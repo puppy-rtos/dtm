@@ -24,6 +24,15 @@
 // GPIO Clk Definitions
 #define DTM_GPIOA_CLK_EN      (1 << 0)  // GPIOA clock enable
 #define DTM_GPIOF_CLK_EN      (1 << 5)  // GPIOF clock enable
+// UART CLK Definitions
+#define DTM_UART1_CLK_EN      (1 << 4)  // USART1 clock enable
+#define DTM_UART2_CLK_EN      (1 << 17) // USART2 clock enable
+
+/* UART IP Description */
+#define DTM_BINFDING_UART_STM32_F4
+#define DTM_UART_BASE         0x40011000UL // UART base address
+#define DTM_UART1_BASE        (DTM_UART_BASE + 0x0000) // UART1 base address
+#define DTM_UART2_BASE        (DTM_UART_BASE + 0x0400) // UART2 base address
 
 /*
  * 2. IP Description
@@ -55,7 +64,11 @@
 #define DTM_SYSCLK_FREQ        168000000    // 目标系统时钟168MHz
 
 /* UART配置 */
-#define DTM_DEBUG_UART         DTM_USART1_BASE
-#define DTM_UART1_TX_PIN       9            // PA9
-#define DTM_UART1_RX_PIN       10           // PA10
-#define DTM_UART1_AF           7            // GPIO AF7 for USART1
+#define DTM_DEBUG_UART         DTM_UART1_BASE
+#define DTM_DEBUG_UART_CLK_EN  DTM_UART1_CLK_EN // USART1 clock enable
+#define DTM_DEBUG_UART_TX_PORT GPIOA            // USART1 TX pin port
+#define DTM_DEBUG_UART_TX_PIN  (1 << 9)         // USART1 TX pin (PA9)
+#define DTM_DEBUG_UART_RX_PORT GPIOA            // USART1 RX pin port
+#define DTM_DEBUG_UART_RX_PIN  (1 << 10)        // USART1 RX pin (PA10)
+#define DTM_DEBUG_UART_TX_AF   7                // USART1 TX pin alternate function (AF7)
+#define DTM_DEBUG_UART_RX_AF   7                // USART1 RX pin alternate function (AF7)
