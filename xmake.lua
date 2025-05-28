@@ -17,9 +17,9 @@ target("firmware")
     set_arch("cortex-m4")
     set_plat("cross")
     -- add_links("c", "m", "nosys");
-    add_cxflags('-mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Dgcc -Wall --specs=nosys.specs -O0  -gdwarf-2 -g')
-    add_ldflags('-mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Wl,--gc-sections,-Map=puppy.map,-cref,-u,Reset_Handler --specs=nosys.specs',{force = true})
-    add_asflags('-c -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -x assembler-with-cpp -Wa,-mimplicit-it=thumb -gdwarf-2 -g')
+    add_cxflags('-mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Dgcc -Wall -O0  -gdwarf-2 -g -ffunction-sections -fdata-sections -fno-builtin-printf')
+    add_asflags('-c -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -x assembler-with-cpp -Wa,-mimplicit-it=thumb -gdwarf-2 -g -ffunction-sections -fdata-sections -fno-builtin-printf')
+    add_ldflags('-mcpu=cortex-m4 -mthumb -mfloat-abi=soft -nostartfiles -Wl,--gc-sections,-Map=dtm.map,-cref,-u,Reset_Handler',{force = true})
     add_ldflags(' -T ' .. os.scriptdir() .. '/link.lds')
     
     -- 包含路径

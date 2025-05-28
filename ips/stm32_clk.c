@@ -64,6 +64,8 @@ typedef struct
 #define RCC_CFGR_SWS_HSE  (1 << 2)
 #define RCC_CFGR_SWS_PLL  (2 << 2)
 
+uint32_t sysclk = 0, pll_vco = 0, pll_p_ck = 0, pll_q_ck = 0, hclk = 0, pclk1 = 0, pclk2 = 0;
+
 /**
  * @brief       Clock setting function
  * @param       plln: Main PLL multiplication factor (PLL multiplication), range: 64~432.
@@ -175,6 +177,66 @@ void sys_stm32_clock_init(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t 
     
     sys_clock_set(plln, pllm, pllp, pllq);  /* Set clock */
 }
+
+/**
+ * @brief       dump the clock tree by printing the current clock configuration
+ * @note        This function prints the current clock configuration in a tree format.
+ * @retval      None
+ */
+void dtm_clk_dumptree(void)
+{
+    uint32_t hse = DTM_HSE_FREQ;
+    uint32_t pllm = (RCC->PLLCFGR & 0x3F);                // PLLM[5:0]
+    uint32_t plln = (RCC->PLLCFGR >> 6) & 0x1FF;          // PLLN[8:0]
+    uint32_t pllp = ((((RCC->PLLCFGR >> 16) & 0x3) + 1) * 2); // PLLP[1:0]
+    uint32_t pllq = (RCC->PLLCFGR >> 24) & 0xF;           // PLLQ[3:0]
+    uint32_t sysclk_src = (RCC->CFGR >> 2) & 0x3;         // SWS[1:0]
+    uint32_t hpre = (RCC->CFGR >> 4) & 0xF;               // HPRE[3:0]
+    uint32_t ppre1 = (RCC->CFGR >> 10) & 0x7;             // PPRE1[2:0]
+    uint32_t ppre2 = (RCC->CFGR >> 13) & 0x7;             // PPRE2[2:0]
+    // Calculate PLL VCO frequency
+    pll_vco = hse * plln / pllm;
+    pll_p_ck = pll_vco / pllp;
+    pll_q_ck = pll_vco / pllq;
+
+    // Calculate SYSCLK
+    if (sysclk_src == 0)
+        sysclk = 16000000; // HSI
+    else if (sysclk_src == 1)
+        sysclk = hse;      // HSE
+    else if (sysclk_src == 2)
+        sysclk = pll_p_ck; // PLL
+    else
+        sysclk = 0;
+
+    // AHB prescaler table
+    const uint16_t ahb_presc_tbl[16] = {1,1,1,1,1,1,1,1,2,4,8,16,64,128,256,512};
+    // APB prescaler table
+    const uint8_t apb_presc_tbl[8] = {1,1,1,1,2,4,8,16};
+
+    hclk = sysclk / ahb_presc_tbl[hpre];
+    pclk1 = hclk / apb_presc_tbl[ppre1];
+    pclk2 = hclk / apb_presc_tbl[ppre2];
+
+    dtm_printf("clock-tree\n");
+    dtm_printf("├── HSE (%lu Hz)\n", hse);
+    dtm_printf("│   └── PLL\n");
+    dtm_printf("│       ├── VCO (%lu Hz)\n", pll_vco);
+    dtm_printf("│       ├── PLL_P (SYSCLK, %lu Hz)\n", pll_p_ck);
+    dtm_printf("│       │   └── AHB (HCLK, %lu Hz)\n", hclk);
+    dtm_printf("│       │       ├── APB1 (PCLK1, %lu Hz)\n", pclk1);
+    dtm_printf("│       │       └── APB2 (PCLK2, %lu Hz)\n", pclk2);
+    dtm_printf("│       └── PLL_Q (USB, %lu Hz)\n", pll_q_ck);
+    dtm_printf("├── HSI (16 MHz)\n");
+    dtm_printf("└── LSE/LSE not shown\n");
+}
+
+/**
+ * @brief       Initialize the system clock to 168MHz
+ * @note        This function configures the system clock to 168MHz using the PLL.
+ *              It also enables the clocks for GPIOA, GPIOF, USART1, and USART2.
+ * @retval      None
+ */
 void dtm_clk_init(void)
 {
     /* Initialize the system clock to 168MHz */
