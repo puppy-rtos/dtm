@@ -1,7 +1,7 @@
 
 #include "dtm_bindings.h"
 
-#ifdef DTM_BINFDING_GPIO_STM32_F4
+#ifdef DTM_BINFDING_GPIO_ARM_M4_ST_GD
 #include "dtm_gpio.h"
 
 /* GPIO寄存器结构定义 */
@@ -157,4 +157,4 @@ uint8_t dtm_gpio_pin_get(uint32_t gpiox, uint16_t pinx)
     }
 }
 
-#endif /* DTM_BINFDING_GPIO_STM32_F4 */
+#endif /* DTM_BINFDING_GPIO_ARM_M4_ST_GD */

@@ -1,7 +1,7 @@
 
 #include "dtm_bindings.h"
 
-#ifdef DTM_BINFDING_CLK_STM32_F4
+#ifdef DTM_BINFDING_CLK_ARM_M4_ST_GD
 
 #include <stdint.h>
 
@@ -260,4 +260,4 @@ void dtm_clk_init(void)
 
 }
 
-#endif /* DTM_BINFDING_CLK_STM32_F4 */
+#endif /* DTM_BINFDING_CLK_ARM_M4_ST_GD */

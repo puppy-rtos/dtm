@@ -1,7 +1,7 @@
 
 #include "dtm_bindings.h"
 
-#ifdef DTM_BINFDING_PMCTRL_STM32_F4
+#ifdef DTM_BINFDING_PMCTRL_ARM_M4_ST_GD
 #include "dtm_pmctrl.h"
 
 #include <stdint.h>
@@ -25,4 +25,4 @@ int dtm_pmctrl_init(void) {
 #endif
 }
 
-#endif /* DTM_BINFDING_PMCTRL_STM32_F4 */
+#endif /* DTM_BINFDING_PMCTRL_ARM_M4_ST_GD */

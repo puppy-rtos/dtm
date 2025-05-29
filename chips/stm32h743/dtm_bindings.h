@@ -4,12 +4,12 @@
  * 1. IP Description 
  */
 /* CLK IP Description */
-#define DTM_BINFDING_CLK_ARM_M4_ST_GD
-#define DTM_CLK_BASE           0x40023800UL
+#define DTM_BINFDING_CLK_ARM_M7_ST_GD
+#define DTM_CLK_BASE           0x58024400UL
 
 /* GPIO IP Description */
 #define DTM_BINFDING_GPIO_ARM_M4_ST_GD
-#define DTM_GPIO_BASE          0x40020000UL
+#define DTM_GPIO_BASE          0x58020000UL
 #define GPIOA                  (DTM_GPIO_BASE + 0x0000) // GPIOA base address
 #define GPIOB                  (DTM_GPIO_BASE + 0x0400) // GPIOB base address
 #define GPIOC                  (DTM_GPIO_BASE + 0x0800) // GPIOC base address
@@ -23,13 +23,14 @@
 #define GPIOK                  (DTM_GPIO_BASE + 0x2800) // GPIOK base address
 // GPIO Clk Definitions
 #define DTM_GPIOA_CLK_EN      (1 << 0)  // GPIOA clock enable
+#define DTM_GPIOB_CLK_EN      (1 << 1)  // GPIOB clock enable
 #define DTM_GPIOF_CLK_EN      (1 << 5)  // GPIOF clock enable
 // UART CLK Definitions
 #define DTM_UART1_CLK_EN      (1 << 4)  // USART1 clock enable
 #define DTM_UART2_CLK_EN      (1 << 17) // USART2 clock enable
 
 /* UART IP Description */
-#define DTM_BINFDING_UART_ARM_M4_ST_GD
+#define DTM_BINFDING_UART_ARM_M7_ST_GD
 #define DTM_UART_BASE         0x40011000UL // UART base address
 #define DTM_UART1_BASE        (DTM_UART_BASE + 0x0000) // UART1 base address
 #define DTM_UART2_BASE        (DTM_UART_BASE + 0x0400) // UART2 base address
@@ -38,16 +39,17 @@
  * 2. IP Description
  */
  /* pmctrl */
-#define DTM_BINFDING_PMCTRL_ARM_M4_ST_GD
-#define DTM_PMCTRL_BASE        0x40007000UL
+#define DTM_BINFDING_PMCTRL_ARM_M7_ST_GD
+#define DTM_PMCTRL_BASE        0x58024800UL
+#define DTM_SYSCFG_BASE        0x58000400UL
 
 /* flash */
-#define DTM_BINFDING_FLASH_ARM_M4_ST_GD
+#define DTM_BINFDING_FLASH_ARM_M7_ST_GD
 #define DTM_FLASH_BASE         0x40023C00UL
 
 /* pinctrl */
-#define DTM_BINFDING_PINCTRL_ARM_M4_ST_GD
-#define DTM_PINCTRL_BASE       0x40020000UL
+#define DTM_BINFDING_PINCTRL_ARM_M7_ST_GD
+#define DTM_PINCTRL_BASE       DTM_GPIO_BASE
 
 /*
  * 3. IP Configuration

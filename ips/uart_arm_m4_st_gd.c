@@ -1,7 +1,7 @@
 
 #include "dtm_bindings.h"
 
-#ifdef DTM_BINFDING_UART_STM32_F4
+#ifdef DTM_BINFDING_UART_ARM_M4_ST_GD
 #include "dtm_gpio.h"
 #include "stdint.h"
 
@@ -65,4 +65,4 @@ void dtm_uart_init(uint32_t sclk, uint32_t baudrate)
     USART_X->CR1 |= 1 << 13;   /* Enable USART */
 }
 
-#endif /* DTM_BINFDING_UART_STM32_F4 */
+#endif /* DTM_BINFDING_UART_ARM_M4_ST_GD */
